@@ -50,11 +50,62 @@ namespace Connect4
                 }
                 game = Program.move(game, move, player);
                 draw(game);
+                checkwin(game);
                 if (player == 1) player = 2;
                 else if (player == 2) player = 1;
             }
         }
 
+        private static void checkwin(int[,] game)
+        {
+            for (int i = 0; i < 6; i++)
+            {
+                for (int j = 0; j < 7; j++)
+                {
+                    if (game[i, j] != 0)
+                    {
+                        if (j < 6)
+                        {
+                            if (game[i, j] == game[i, j + 1])
+                            {
+                                if (j < 5)
+                                {
+                                    if (game[i, j] == game[i, j + 2])
+                                    {
+                                        if (j < 4)
+                                        {
+                                            if (game[i, j] == game[i, j + 3])
+                                            {
+                                                Console.WriteLine("4");
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            if (i < 5)
+                            {
+                                if (game[i, j] == game[i + 1, j])
+                                {
+                                    if (i < 4)
+                                    {
+                                        if (game[i, j] == game[i + 2, j])
+                                        {
+                                            if (i < 3)
+                                            {
+                                                if (game[i, j] == game[i + 3, j])
+                                                {
+                                                    Console.WriteLine("4");
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
         private static void draw(int[,] game)
         {
             Console.Clear();
@@ -69,15 +120,16 @@ namespace Connect4
             Console.WriteLine();
         }
 
-        private static int[,] move(int[,] game, int col,int player)
+        private static int[,] move(int[,] game, int col, int player)
         {
             int height = 5;
-            if (game[height, col] == 0) {
+            if (game[height, col] == 0)
+            {
                 game[height, col] = player;
             }
-            else if (game[height-1, col] == 0)
+            else if (game[height - 1, col] == 0)
             {
-                game[height-1, col] = player;
+                game[height - 1, col] = player;
             }
             else if (game[height - 2, col] == 0)
             {
