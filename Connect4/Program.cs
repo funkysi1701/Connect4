@@ -23,30 +23,39 @@ namespace Connect4
             int player = 1;
             while (move > -2)
             {
-                ConsoleKeyInfo info = Console.ReadKey();
-                switch (info.Key)
+                if (player == 1)
                 {
-                    case ConsoleKey.D0:
-                        move = 0;
-                        break;
-                    case ConsoleKey.D1:
-                        move = 1;
-                        break;
-                    case ConsoleKey.D2:
-                        move = 2;
-                        break;
-                    case ConsoleKey.D3:
-                        move = 3;
-                        break;
-                    case ConsoleKey.D4:
-                        move = 4;
-                        break;
-                    case ConsoleKey.D5:
-                        move = 5;
-                        break;
-                    case ConsoleKey.D6:
-                        move = 6;
-                        break;
+                    ConsoleKeyInfo info = Console.ReadKey();
+                    switch (info.Key)
+                    {
+                        case ConsoleKey.D0:
+                            move = 0;
+                            break;
+                        case ConsoleKey.D1:
+                            move = 1;
+                            break;
+                        case ConsoleKey.D2:
+                            move = 2;
+                            break;
+                        case ConsoleKey.D3:
+                            move = 3;
+                            break;
+                        case ConsoleKey.D4:
+                            move = 4;
+                            break;
+                        case ConsoleKey.D5:
+                            move = 5;
+                            break;
+                        case ConsoleKey.D6:
+                            move = 6;
+                            break;
+                    }
+
+                }
+                if (player == 2)
+                {
+                    Random r = new Random();
+                    move = r.Next(0, 6);
                 }
                 game = Program.move(game, move, player);
                 draw(game);
@@ -76,7 +85,15 @@ namespace Connect4
                                         {
                                             if (game[i, j] == game[i, j + 3])
                                             {
-                                                Console.WriteLine("4");
+                                                Console.WriteLine("Player " + game[i,j] + " has won.");
+                                                Console.ReadKey();
+                                                for (int k = 0; k < 6; k++)
+                                                {
+                                                    for (int l = 0; l < 7; l++)
+                                                    {
+                                                        game[k, l] = 0;
+                                                    }
+                                                }
                                             }
                                         }
                                     }
@@ -94,7 +111,15 @@ namespace Connect4
                                             {
                                                 if (game[i, j] == game[i + 3, j])
                                                 {
-                                                    Console.WriteLine("4");
+                                                    Console.WriteLine("Player " + game[i, j] + " has won.");
+                                                    Console.ReadKey();
+                                                    for (int k = 0; k < 6; k++)
+                                                    {
+                                                        for (int l = 0; l < 7; l++)
+                                                        {
+                                                            game[k, l] = 0;
+                                                        }
+                                                    }
                                                 }
                                             }
                                         }
