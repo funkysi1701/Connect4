@@ -1,20 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Connect4
 {
     class Program
     {
+        public static int player = 1;
         static void Main(string[] args)
         {
-            int[,] game = new int[6, 7];
-            setup(game);
-            draw(game);
+            Game g = new Game();
+            g.setup();
+            
+            g.draw();
             int move = -1;
-            int player = 1;
+            
             while (move > -2)
             {
                 if (player == 1)
@@ -43,19 +41,32 @@ namespace Connect4
                         case ConsoleKey.D6:
                             move = 6;
                             break;
+                        case ConsoleKey.Escape:
+                            move = -5;
+                            break;
                     }
-
                 }
                 if (player == 2)
                 {
                     Random r = new Random();
                     move = r.Next(0, 7);
                 }
-                game = Program.move(game, move, player);
-                draw(game);
-                bool res = checkwin(game);
-                if (res)
+                if(move == -5)
                 {
+                    g.setup();
+                    g.draw();
+                }
+                else
+                {
+                    g.game = Program.move(g.game, move);
+                    g.draw();
+                }
+                if (g.checkwin())
+                {
+                    Console.WriteLine("Player " + player + " has won.");
+                    Console.ReadKey();
+                    g.setup();
+                    g.draw();
                     Random r = new Random();
                     player = r.Next(1, 3);
                 }
@@ -63,79 +74,7 @@ namespace Connect4
                 else if (player == 2) player = 1;
             }
         }
-
-        private static bool checkwin(int[,] game)
-        {
-            for (int i = 0; i < 6; i++)
-            {
-                for (int j = 0; j < 7; j++)
-                {
-                    if (game[i, j] != 0)
-                    {
-                        if (j < 6)
-                        {
-                            if (game[i, j] == game[i, j + 1])
-                            {
-                                if (j < 5)
-                                {
-                                    if (game[i, j] == game[i, j + 2])
-                                    {
-                                        if (j < 4)
-                                        {
-                                            if (game[i, j] == game[i, j + 3])
-                                            {
-                                                Console.WriteLine("Player " + game[i, j] + " has won.");
-                                                Console.ReadKey();
-                                                setup(game);
-                                                return true;
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        if (i < 5)
-                        {
-                            if (game[i, j] == game[i + 1, j])
-                            {
-                                if (i < 4)
-                                {
-                                    if (game[i, j] == game[i + 2, j])
-                                    {
-                                        if (i < 3)
-                                        {
-                                            if (game[i, j] == game[i + 3, j])
-                                            {
-                                                Console.WriteLine("Player " + game[i, j] + " has won.");
-                                                Console.ReadKey();
-                                                setup(game);
-                                                return true;
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            return false;
-        }
-        private static void draw(int[,] game)
-        {
-            Console.Clear();
-            for (int i = 0; i < 6; i++)
-            {
-                for (int j = 0; j < 7; j++)
-                {
-                    Console.Write(game[i, j]);
-                }
-                Console.WriteLine();
-            }
-            Console.WriteLine();
-        }
-
-        private static int[,] move(int[,] game, int col, int player)
+        private static int[,] move(int[,] game, int col)
         {
             int height = 5;
             if (game[height, col] == 0)
@@ -162,19 +101,13 @@ namespace Connect4
             {
                 game[height - 5, col] = player;
             }
-            return game;
-        }
-
-        private static int[,] setup(int[,] game)
-        {
-            for (int i = 0; i < 6; i++)
+            else
             {
-                for (int j = 0; j < 7; j++)
-                {
-                    game[i, j] = 0;
-                }
+                if (player == 1) player = 2;
+                else if (player == 2) player = 1;
             }
             return game;
         }
+
     }
 }
