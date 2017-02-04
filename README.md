@@ -10,9 +10,10 @@ Connect4 by Simon Foster. A personal project to learn how to create a Connect4 c
 
 # Timeline
 
-2017-01-31  Created Solution
-2017-02-02  Created Random second player
-2017-02-03  Created Class Game
+ * 2017-01-31	Created Solution
+ * 2017-02-02	Created Random second player
+ * 2017-02-03	Created Class Game
+ * 2017-02-04	Add check for diagonal moves, added option for playing against human or computer
 
 # Build and Test
 No tests yet.

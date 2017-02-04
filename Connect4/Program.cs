@@ -4,7 +4,6 @@ namespace Connect4
 {
     class Program
     {
-        public static int player = 1;
         static void Main(string[] args)
         {
             Game g = new Game();
@@ -12,10 +11,10 @@ namespace Connect4
             
             g.draw();
             int move = -1;
-            
+            int type = 1;
             while (move > -2)
             {
-                if (player == 1)
+                if (g.player == 1 || type == 0)
                 {
                     ConsoleKeyInfo info = Console.ReadKey();
                     switch (info.Key)
@@ -44,70 +43,56 @@ namespace Connect4
                         case ConsoleKey.Escape:
                             move = -5;
                             break;
+                        case ConsoleKey.H:
+                            type = 0;
+                            break;
+                        case ConsoleKey.U:
+                            type = 1;
+                            break;
+                        case ConsoleKey.I:
+                            type = 2;
+                            break;
+                        default:
+                            move = -1;
+                            break;
                     }
                 }
-                if (player == 2)
+                if (g.player == 2 && type == 1)
                 {
                     Random r = new Random();
                     move = r.Next(0, 7);
                 }
-                if(move == -5)
+                if (g.player == 2 && type == 2)
+                {
+                    // Clever logic for deciding moves
+                }
+                if (move == -5)
                 {
                     g.setup();
                     g.draw();
                 }
-                else
+                else if(move == -1)
                 {
-                    g.game = Program.move(g.game, move);
+                    if (g.player == 1) g.player = 2;
+                    else if (g.player == 2) g.player = 1;
+                }
+                else if (move > -1)
+                {
+                    g.move(move);
                     g.draw();
                 }
                 if (g.checkwin())
                 {
-                    Console.WriteLine("Player " + player + " has won.");
+                    Console.WriteLine("Player " + g.player + " has won.");
                     Console.ReadKey();
                     g.setup();
                     g.draw();
                     Random r = new Random();
-                    player = r.Next(1, 3);
+                    g.player = r.Next(1, 3);
                 }
-                if (player == 1) player = 2;
-                else if (player == 2) player = 1;
+                if (g.player == 1) g.player = 2;
+                else if (g.player == 2) g.player = 1;
             }
         }
-        private static int[,] move(int[,] game, int col)
-        {
-            int height = 5;
-            if (game[height, col] == 0)
-            {
-                game[height, col] = player;
-            }
-            else if (game[height - 1, col] == 0)
-            {
-                game[height - 1, col] = player;
-            }
-            else if (game[height - 2, col] == 0)
-            {
-                game[height - 2, col] = player;
-            }
-            else if (game[height - 3, col] == 0)
-            {
-                game[height - 3, col] = player;
-            }
-            else if (game[height - 4, col] == 0)
-            {
-                game[height - 4, col] = player;
-            }
-            else if (game[height - 5, col] == 0)
-            {
-                game[height - 5, col] = player;
-            }
-            else
-            {
-                if (player == 1) player = 2;
-                else if (player == 2) player = 1;
-            }
-            return game;
-        }
-
     }
 }
