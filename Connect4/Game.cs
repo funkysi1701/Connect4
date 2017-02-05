@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 
 namespace Connect4
 {
@@ -55,15 +56,15 @@ namespace Connect4
                                 }
                             }
                         }
-                        if (j < 6 && i < 5 && j > 0)
+                        if (j < 7 && i < 5 && j > 0)
                         {
                             if (game[i, j] == game[i + 1, j - 1])
                             {
-                                if (j < 5 && i < 4 && j > 1)
+                                if (j < 7 && i < 5 && j > 1)
                                 {
                                     if (game[i, j] == game[i + 2, j - 2])
                                     {
-                                        if (j < 4 && i < 3 && j >2)
+                                        if (j < 7 && i < 5 && j > 2)
                                         {
                                             if (game[i, j] == game[i + 3, j - 3])
                                             {
@@ -140,8 +141,13 @@ namespace Connect4
                     {
                         Console.BackgroundColor = ConsoleColor.Yellow;
                     }
-                    Console.Write(i+","+j+" ");
+                    if (System.Configuration.ConfigurationManager.AppSettings["Debug"] == "true")
+                    {
+                        Console.Write(i + "," + j);
+                    }
+                    else Console.Write("0");
                     Console.BackgroundColor = ConsoleColor.Black;
+                    Console.Write(" ");
                 }
                 Console.WriteLine();
             }
