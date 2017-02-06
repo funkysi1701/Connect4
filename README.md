@@ -14,6 +14,8 @@ Connect4 by Simon Foster. A personal project to learn how to create a Connect4 c
  * 2017-02-02	Created Random second player
  * 2017-02-03	Created Class Game
  * 2017-02-04	Add check for diagonal moves, added option for playing against human or computer
+ * 2017-02-05	Added first unit test for wins
+ * 2017-02-06	Moved to github, added empty MVC project
 
 # Build and Test
 No tests yet.
